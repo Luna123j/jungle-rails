@@ -1,2 +1,9 @@
-<h1>Admin::Dashboard#show</h1>
-<p>Find me in app/views/admin/dashboard/show.html.erb</p>
+<header class="page-header">
+  <h2>Admin &raquo; <small class="text-muted">Dashboard</small></h2>
+</header>
+<div class="alert alert-secondary" role="alert">
+  There are <a href="admin/products"><%= @total_products%></a> products in total.
+</div>
+<div class="alert alert-secondary" role="alert">
+  There are <%= @total_category %> categories in total.
+</div>
