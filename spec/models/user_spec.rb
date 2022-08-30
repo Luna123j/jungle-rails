@@ -96,36 +96,68 @@ RSpec.describe User, type: :model do
   end
 
   describe '.authenticate_with_credentials' do
-    User.new(
-      firstname: "Shenglun",
-      lastname: "Jin",
-      email:"test@test.com",
-      password: "123",
-      password_confirmation: "123"
-    )    
+    
+
     it "should return a valid user if pass authentication" do
-      user=User.authenticate_with_credentials("test@test.com","123")
+      @user=User.new(
+        firstname: "Shenglun",
+        lastname: "Jin",
+        email:"test@test.com",
+        password: "123",
+        password_confirmation: "123"
+      )    
+      @user.save!
+      user = User.authenticate_with_credentials("test@test.com","123")
       
       expect(user.id).to be_present
     end
-   
 
-  end
-
-  describe 'edge case' do
-    User.new(
-      firstname: "Shenglun",
-      lastname: "Jin",
-      email:"test@test.com",
-      password: "123",
-      password_confirmation: "123"
-    )    
-    it "should return a valid user if pass authentication" do
-      user=User.authenticate_with_credentials("test@test.com","123")
+    it "should return nil if fail authentication" do
+      @user=User.new(
+        firstname: "Shenglun",
+        lastname: "Jin",
+        email:"test@test.com",
+        password: "123",
+        password_confirmation: "123"
+      )    
+      @user.save!
+      user = User.authenticate_with_credentials("test@abc.com","123")
       
-      expect(user.id).to be_present
+      expect(user).to eq(nil)
     end
    
+    describe 'edge case' do
+
+      it "should authenticated successfully if user accidentally enter space in their email" do
+        @user=User.new(
+          firstname: "Shenglun",
+          lastname: "Jin",
+          email:"test@test.com",
+          password: "123",
+          password_confirmation: "123"
+        )    
+        @user.save!
+        user = User.authenticate_with_credentials("test@    test.com","123")
+        
+        expect(user.id).to be_present
+      end
+     
+      it "should authenticated successfully if user accidentally enter uppercase in their email" do
+        @user=User.new(
+          firstname: "Shenglun",
+          lastname: "Jin",
+          email:"test@test.com",
+          password: "123",
+          password_confirmation: "123"
+        )    
+        @user.save!
+        user = User.authenticate_with_credentials("teSt@    test.coM","123")
+        
+        expect(user.id).to be_present
+      end
+    end
 
   end
+
+  
 end

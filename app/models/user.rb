@@ -7,8 +7,10 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 3 }, on: :create
 
   def self.authenticate_with_credentials(email,password)
-    user = User.find_by_email(email.downcase)
-    user.authenticate(password)
+    email.gsub!(/\s+/,'')
+    if user = User.find_by_email(email.downcase)
+      user.authenticate(password)
+    end
   end
 
   private
