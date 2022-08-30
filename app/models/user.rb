@@ -10,7 +10,6 @@ class User < ApplicationRecord
     email.gsub!(/\s+/,'')
     if user = User.find_by_email(email.downcase)
       user.authenticate(password)
-      user.errors
     end
   end
 
