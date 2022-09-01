@@ -1,0 +1,15 @@
+<tr>
+  <td>
+    <h4><%= image_tag orderInfo.product.image.tiny.url %></h4>
+  </td>
+  <td>
+    <h4><%= orderInfo.product.name %></h4>
+    <h5><%= orderInfo.product.description %></h5>
+  </td>
+  <td>
+    <h4><%= orderInfo.quantity %></h4>
+  </td>
+  <td>
+    <%= "$#{orderInfo.item_price*orderInfo.quantity}" %>
+  </td>
+</tr>
